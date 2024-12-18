@@ -1,0 +1,36 @@
+name: Publish Docker image
+
+on:
+  push:
+    branches: ["develop"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm install --legacy-peer-deps
+      - run: npm run build:prod --if-present
+      - name: Deploy to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          source: "./dist/meb-fe/browser/*"
+          target: "/var/www/meb-app/"
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Restart NGINX
+        run: sudo systemctl restart nginx

@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  blog-api:
+    image: project_java:1.0
+    container_name: blog-api
+    ports:
+      - 8083:8080
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/blog-app
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - ACCESS_TOKEN_KEY_SECRET=7bJsVK6xHhCMOAqP227fO6WSX5pem19TIReDlydGazZtv3Bl1CZqeDLvHc5kb1Rq
+      - REFRESH_TOKEN_KEY_SECRET=GmeWO6F7BRjOsjZr5I6QFyXOyxuI1KKL73QD3GjTZfewl9z1eHDeUrop2ssAcfbh
+      - CLOUDINARY_NAME=blog-app-g7
+      - CLOUDINARY_API_KEY=284821554366759
+      - CLOUDINARY_API_SECRET=lvC7hqloqwmrnKeyX-dUWP_UF2g
+      - DOMAIN_COOKIE_DEV=localhost
+      - PATH_COOKIE_DEV=/
+      - MAX_AGE_COOKIE_DEV=3600
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_DB=blog-app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  blog-fe:
+    image: 'angular-fe'
+    container_name: blog-fe
+    ports:
+      - 4200:80  # Map cổng FE với cổng Nginx
+    depends_on:
+      - blog-api
+    restart: always

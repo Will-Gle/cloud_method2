@@ -1,0 +1,102 @@
+<div class="flex flex-col gap-10 w-[65vw]">
+  <div class="text-6xl font-bold">Profile</div>
+  <ng-container *ngIf="userProfile$ | async as profile">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col gap-10">
+        <!-- Image Upload Section -->
+        <div class="flex items-center">
+          <div class="w-32 h-32 z-10 rounded-3xl overflow-hidden mr-3 absolute">
+            <img
+              [src]="selectedImage || profile.avatar || profilePicture"
+              alt="User"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <label
+            for="file-upload"
+            class="shine-button h-32 w-[35%] bg-[var(--main-theme)] cursor-pointer rounded-r-3xl ml-16 flex items-center justify-center text-white font-bold text-2xl"
+          >
+            <div>Upload Image</div>
+          </label>
+          <input
+            type="file"
+            id="file-upload"
+            name="uploadfile"
+            class="hidden"
+            accept="image/*"
+            (change)="onFileChange($event)"
+          />
+        </div>
+
+        <!-- Account Information -->
+        <nz-form-item>
+          <nz-form-control>
+            <div class="flex flex-col gap-5">
+              <div class="text-4xl font-bold">Account Information</div>
+              <div class="flex flex-col gap-1">
+                <nz-input-group
+                  [nzPrefix]="prefixName"
+                  class="text-white text-2xl w-full h-14 p-2 border rounded-lg mb-1 focus:outline-none bg-[var(--font-color)]"
+                >
+                  <input
+                    nz-input
+                    formControlName="username"
+                    placeholder="Name"
+                    class="text-white text-2xl p-2 border rounded ml-3 focus:outline-none bg-[var(--font-color)]"
+                  />
+                </nz-input-group>
+                <ng-template #prefixName>
+                  <span nz-icon nzType="user"></span>
+                </ng-template>
+                <nz-input-group
+                  nzPrefix="@"
+                  class="text-white text-2xl w-full h-14 p-2 border rounded-lg mb-1 focus:outline-none bg-[var(--font-color)]"
+                >
+                  <input
+                    nz-input
+                    formControlName="nameTag"
+                    placeholder="NameTag"
+                    class="text-white text-2xl p-2 border rounded ml-3 focus:outline-none bg-[var(--font-color)]"
+                  />
+                </nz-input-group>
+              </div>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Bio Section -->
+        <nz-form-item>
+          <div class="flex flex-col gap-5">
+            <div class="text-4xl font-bold">About</div>
+            <nz-form-control>
+              <nz-textarea-count [nzMaxCharacterCount]="500">
+                <textarea
+                  nz-input
+                  rows="5"
+                  formControlName="bio"
+                  placeholder="Bio"
+                  class="text-white text-2xl w-[65vw] h-14 p-2 border rounded-lg mb-1 focus:outline-none bg-[var(--font-color)]"
+                ></textarea>
+              </nz-textarea-count>
+            </nz-form-control>
+          </div>
+        </nz-form-item>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-end p-4">
+        <button
+          type="submit"
+          class="text-white w-32 flex items-center justify-center h-10 rounded-xl font-bold"
+          [disabled]="isUploading"
+          [ngClass]="{
+            'shine-button bg-[--main-theme]': !isUploading,
+            'bg-gray-400 text-gray-200 cursor-not-allowed': isUploading,
+          }"
+        >
+          SAVE
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</div>

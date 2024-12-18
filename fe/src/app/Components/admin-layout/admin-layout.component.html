@@ -1,0 +1,41 @@
+<div class="flex flex-row pl-5 py-8 gap-x-20">
+    
+    <div class="side-bar-menu ">
+        <ul nz-menu>
+            <li nz-menu-item routerLink="report-blog" [ngClass]="{'selected': isActive('report-blog')}" class="cursor-pointer">
+                 <div class="flex justify-between w-[130px]">
+                    <div class="flex gap-x-2 text-lg">
+                        <span nz-icon nzType="user" nzTheme="outline"></span>
+                        <div>Reported Blogs</div>
+                    </div>
+                    <span nz-icon nzType="right" nzTheme="outline"></span>
+                    
+                 </div>
+            </li >
+            <li nz-menu-item routerLink="report-user" [ngClass]="{'selected': isActive('report-user')}" class="cursor-pointer">
+                <div class="flex justify-between w-[130px]">
+                    <div class="flex gap-x-2 text-lg">
+                        <span nz-icon nzType="lock" nzTheme="outline"></span>
+                        <div>Reported Users</div>
+                    </div>
+                    <span nz-icon nzType="right" nzTheme="outline"></span>
+                    
+                 </div>
+            </li>
+            <li nz-menu-item routerLink="content-management" [ngClass]="{'selected': isActive('content-management')}" class="cursor-pointer">
+                <div class="flex justify-between w-[130px]">
+                    <div class="flex gap-x-2 text-lg">
+                        <span nz-icon nzType="lock" nzTheme="outline"></span>
+                        <div>Content</div>
+                    </div>
+                    <span nz-icon nzType="right" nzTheme="outline"></span>
+                    
+                 </div>
+            </li>
+        </ul>
+    </div>
+    <div class="pl-[-80px] w-4/5">
+        <router-outlet></router-outlet>
+    </div>
+    
+</div>

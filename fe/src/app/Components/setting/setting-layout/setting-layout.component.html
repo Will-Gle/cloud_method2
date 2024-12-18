@@ -1,0 +1,32 @@
+<div class="flex flex-row pl-5 py-8 gap-x-20">
+    
+    <app-side-bar></app-side-bar>
+    <div class="side-bar-menu">
+        <ul nz-menu>
+            <li nz-menu-item routerLink="profile" [ngClass]="{'selected': isActive('profile')}">
+                 <div class="flex justify-between w-[130px]">
+                    <div class="flex gap-x-2 text-lg">
+                        <span nz-icon nzType="user" nzTheme="outline"></span>
+                        <div>Profile</div>
+                    </div>
+                    <span nz-icon nzType="right" nzTheme="outline"></span>
+                    
+                 </div>
+            </li >
+            <li nz-menu-item routerLink="security" [ngClass]="{'selected': isActive('security')}">
+                <div class="flex justify-between w-[130px]">
+                    <div class="flex gap-x-2 text-lg">
+                        <span nz-icon nzType="lock" nzTheme="outline"></span>
+                        <div>Security</div>
+                    </div>
+                    <span nz-icon nzType="right" nzTheme="outline"></span>
+                    
+                 </div>
+            </li>
+        </ul>
+    </div>
+    <div class="pl-[-80px]">
+        <router-outlet></router-outlet>
+    </div>
+    
+</div>

@@ -1,0 +1,109 @@
+<div class="min-h-screen flex justify-center">
+  <div class="rounded-lg flex w-[100vw]">
+    <!-- Left side: Form -->
+    <div class="w-1/2 p-[5%]">
+      <!-- Welcome Back Section -->
+      <div class="mb-24">
+        <h2 class="text-5xl font-bold text-[--font-color] tracking-widest">
+          WELCOME BACK!
+        </h2>
+        <p class="text-gray-500 text-2xl pt-4">
+          Don't have an account?
+          <a
+            [routerLink]="['/auth/register']"
+            routerLinkActive="router-link-active"
+            class="text-[--main-theme]"
+            >Sign up</a
+          >
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form
+        nz-form
+        [formGroup]="loginForm"
+        class="gap-y-5 flex flex-col"
+        autocomplete="off"
+      >
+        <nz-form-item>
+          <nz-form-control>
+            <div class="mb-10">
+              <div
+                for="username"
+                class="block text-4xl font-medium text-[--font-color]"
+              >
+                Username
+              </div>
+              <input
+                type="text"
+                formControlName="username"
+                placeholder="username"
+                class="w-full mt-2 h-14 p-3 border text-[--main-theme] text-xl rounded-3xl border-[#5e74bc] focus:ring-blue-500 focus:border-[#5e74bc]"
+                autocomplete="off"
+              />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <div class="mb-4">
+              <div
+                for="password"
+                class="block text-4xl font-medium text-[--font-color]"
+              >
+                Password
+              </div>
+              <div class="relative">
+                <input
+                  type="password"
+                  formControlName="password"
+                  placeholder="••••••••"
+                  class="w-full mt-2 h-14 p-3 pr-10 border text-[--main-theme] text-xl rounded-3xl border-[#5e74bc] focus:ring-blue-500 focus:border-[#5e74bc]"
+                  autocomplete="off"
+                />
+                <span
+                  nz-icon
+                  nzType="eye-invisible"
+                  nzTheme="outline"
+                  class="absolute text-3xl top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer right-5 mt-[3px]"
+                ></span>
+              </div>
+            </div>
+            <div
+              class="text-xl text-[--main-theme] italic cursor-pointer hover:underline flex justify-end"
+              routerLink="/home"
+            >
+              Access website without login
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="">
+          <button
+            *ngIf="!loginForm.invalid"
+            [disabled]="loginForm.invalid"
+            (click)="onLogin()"
+            class="shine-button w-full bg-[--main-theme] rounded-3xl text-white py-4 text-4xl"
+          >
+            Sign In
+          </button>
+          <button
+            *ngIf="loginForm.invalid"
+            [disabled]="loginForm.invalid"
+            class="cursor-not-allowed w-full bg-gray-400 rounded-3xl text-white py-4 text-4xl"
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right side: Image and Header Links -->
+    <div class="w-1/2">
+      <div class="">
+        <img [src]="imagePath" class="h-[100vh] object-cover" />
+      </div>
+    </div>
+  </div>
+</div>

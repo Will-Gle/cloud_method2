@@ -1,0 +1,22 @@
+<form nz-form [formGroup]="form">
+    <nz-form-control>
+      <nz-form-item>
+        <input
+          type="text"
+          formControlName="title"
+          placeholder="Category's name"
+          class="text-white text-2xl w-full p-2 border rounded-xl mb-1 focus:outline-none bg-[var(--font-color)]"
+        />
+      </nz-form-item>
+    </nz-form-control>
+    <nz-form-control>
+      <nz-form-item>
+        <textarea
+          formControlName="content"
+          placeholder="Category's description"
+          class="text-white text-2xl w-full h-32 p-2 border rounded-xl mb-1 focus:outline-none bg-[var(--font-color)]"
+        ></textarea>
+      </nz-form-item>
+    </nz-form-control>
+  </form>
+  

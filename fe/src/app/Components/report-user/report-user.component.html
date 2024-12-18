@@ -1,0 +1,89 @@
+<div class="min-h-screen">
+  <div class="container mx-10 py-8">
+    <!-- Featured/Latest section -->
+    <section class="mb-12">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-[var(--font-color)] uppercase">
+            Reported Users: Pending
+        </h2>
+      </div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
+      >
+        <app-report-card
+          *ngFor="let report of pendingReports$ | async"
+          [report]="report"
+          [reportAction]="true"
+          (onReportAction)="reportAction($event)"
+        >
+        </app-report-card>
+      </div>
+      <!-- Pagination Controls for Pending -->
+      <div class="flex justify-center mt-6 gap-2">
+        <button
+          *ngFor="let page of [0,1,2,3,4]"
+          (click)="onPageChange(page, 'pending')"
+          [class.bg-[var(--main-theme)]]="pendingCurrentPage === page"
+          class="px-4 py-2 rounded-md border hover:bg-gray-400 text-black"
+        >
+          {{page + 1}}
+        </button>
+      </div>
+    </section>
+    <section class="mb-12">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-[var(--font-color)] uppercase">
+          Reported Users: Cancelled
+        </h2>
+      </div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
+      >
+        <app-report-card
+          *ngFor="let report of cancelReports$ | async"
+          [report]="report"
+        >
+        </app-report-card>
+      </div>
+      <!-- Pagination Controls for Cancelled -->
+      <div class="flex justify-center mt-6 gap-2">
+        <button
+          *ngFor="let page of [0,1,2,3,4]"
+          (click)="onPageChange(page, 'cancel')"
+          [class.bg-[var(--main-theme)]]="cancelCurrentPage === page"
+          class="px-4 py-2 rounded-md border hover:bg-gray-400 text-black"
+        >
+          {{page + 1}}
+        </button>
+      </div>
+    </section>
+    <section class="mb-12">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-[var(--font-color)] uppercase">
+          Reported Users: Banned
+        </h2>
+      </div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
+      >
+        <app-report-card
+          *ngFor="let report of deleteReports$ | async"
+          [report]="report"
+          [reportAction]="true"
+        (onReportAction)="reportAction($event)"
+        >
+        </app-report-card>
+      </div>
+      <div class="flex justify-center mt-6 gap-2">
+        <button
+          *ngFor="let page of [0,1,2,3,4]"
+          (click)="onPageChange(page, 'delete')"
+          [class.bg-[var(--main-theme)]]="deleteCurrentPage === page"
+          class="px-4 py-2 rounded-md border hover:bg-gray-400 text-black"
+        >
+          {{page + 1}}
+        </button>
+      </div>
+    </section>
+  </div>
+</div>

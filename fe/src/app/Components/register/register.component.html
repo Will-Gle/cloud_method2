@@ -1,0 +1,184 @@
+<div class="min-h-screen flex justify-center">
+  <div class="rounded-lg flex w-[100vw]">
+    <!-- Left side: Form -->
+    <div class="w-1/2 pt-[2%] px-[5%]">
+      <!-- Welcome Section -->
+      <div class="mb-24">
+        <h2 class="text-5xl font-bold text-[--font-color] tracking-widest">
+          CREATE ACCOUNT
+        </h2>
+        <p class="text-gray-500 text-2xl pt-4">
+          Already have an account?
+          <a
+            [routerLink]="['/auth/login']"
+            routerLinkActive="router-link-active"
+            class="text-[--main-theme]"
+            >Sign in</a
+          >
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form
+        nz-form
+        [formGroup]="registerForm"
+        class="gap-y-1 flex flex-col"
+        autocomplete="off"
+      >
+        <nz-form-item>
+          <nz-form-control>
+            <div class="mb-10">
+              <div
+                for="username"
+                class="block text-4xl font-medium text-[--font-color]"
+              >
+                Username
+              </div>
+              <input
+                type="text"
+                formControlName="username"
+                placeholder="Username"
+                class="w-full mt-2 h-14 p-3 border text-[--main-theme] text-xl rounded-3xl border-[#5e74bc] focus:ring-blue-500 focus:border-[#5e74bc]"
+                autocomplete="off"
+              />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <div class="mb-10">
+              <div
+                for="email"
+                class="block text-4xl font-medium text-[--font-color]"
+              >
+                Email
+              </div>
+
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="Email address"
+                class="w-full mt-2 h-14 p-3 border text-[--main-theme] text-xl rounded-3xl border-[#5e74bc] focus:ring-blue-500 focus:border-[#5e74bc]"
+                autocomplete="off"
+              />
+              <div
+                *ngIf="
+                  registerForm.get('email')?.invalid &&
+                  (registerForm.get('email')?.touched ||
+                    registerForm.get('email')?.dirty)
+                "
+              >
+                <p class="text-red-300 text-xl pl-2 absolute">
+                  Invalid email format
+                </p>
+              </div>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <div class="mb-10">
+              <div
+                for="password"
+                class="block text-4xl font-medium text-[--font-color]"
+              >
+                Password
+              </div>
+              <div class="relative">
+                <input
+                  type="password"
+                  formControlName="password"
+                  placeholder="••••••••"
+                  class="w-full mt-2 h-14 p-3 pr-10 border text-[--main-theme] text-xl rounded-3xl border-[rgb(94,116,188)] focus:ring-blue-500 focus:border-[#5e74bc]"
+                  autocomplete="off"
+                />
+                <span
+                  nz-icon
+                  nzType="eye-invisible"
+                  nzTheme="outline"
+                  class="absolute text-3xl top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer right-5 mt-[3px]"
+                ></span>
+              </div>
+              <div
+                *ngIf="
+                  registerForm.get('password')?.hasError('weakPassword') &&
+                  (registerForm.get('password')?.touched ||
+                    registerForm.get('password')?.dirty)
+                "
+              >
+                <p class="text-red-300 text-xl pl-2 absolute">
+                  Password must be at least 8 characters long and include
+                  uppercase, lowercase, number, and special character
+                </p>
+              </div>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <div class="mb-10">
+              <div
+                for="confirm-password"
+                class="block text-4xl font-medium text-[--font-color]"
+              >
+                Confirm Password
+              </div>
+              <div class="relative">
+                <input
+                  type="password"
+                  formControlName="confirmPassword"
+                  placeholder="••••••••"
+                  class="w-full mt-2 h-14 p-3 pr-10 border text-[--main-theme] text-xl rounded-3xl border-[#5e74bc] focus:ring-blue-500 focus:border-[#5e74bc]"
+                  autocomplete="new-password"
+                />
+                <span
+                  nz-icon
+                  nzType="eye-invisible"
+                  nzTheme="outline"
+                  class="absolute text-3xl top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer right-5 mt-[3px]"
+                ></span>
+              </div>
+              <div
+                *ngIf="
+                  registerForm.hasError('passwordMismatch') &&
+                  (registerForm.get('confirmPassword')?.touched ||
+                    registerForm.get('confirmPassword')?.dirty)
+                "
+              >
+                <p class="text-red-300 text-xl pl-2 absolute">
+                  Password do not match
+                </p>
+              </div>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="mt-1">
+          <button
+            *ngIf="!registerForm.invalid"
+            (click)="onRegister()"
+            class="shine-button w-full bg-[--main-theme] rounded-3xl text-white py-4 text-4xl"
+          >
+            Register
+          </button>
+          <button
+            *ngIf="registerForm.invalid"
+            class="cursor-not-allowed w-full bg-gray-500 rounded-3xl text-white py-4 text-4xl"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right side: Image -->
+    <div class="w-1/2">
+      <div class="">
+        <img [src]="imagePath" class="h-[100vh] object-cover" />
+      </div>
+    </div>
+  </div>
+</div>

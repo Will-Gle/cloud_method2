@@ -1,0 +1,131 @@
+<div class="flex flex-col gap-10 w-[65vw]">
+  <div class="text-6xl font-bold">Security</div>
+
+  <!-- Change Email Form -->
+  <form [formGroup]="emailForm" autocomplete="off" (ngSubmit)="onChangeEmail()">
+    <div class="flex flex-col gap-5">
+      <!-- <div class="text-4xl font-bold">Change Email</div>
+      <nz-form-control>
+        <nz-input-group
+          [nzPrefix]="prefixEmail"
+          class="text-white text-2xl w-full h-14 p-2 border rounded-lg mb-1 focus:outline-none bg-[var(--font-color)]"
+        >
+          <input
+            nz-input
+            formControlName="email"
+            placeholder="Email"
+            autocomplete="off"
+            class="text-white text-2xl p-2 ml-3 focus:outline-none bg-[var(--font-color)]"
+          />
+        </nz-input-group>
+        <ng-template #prefixEmail>
+          <span nz-icon nzType="mail"></span>
+        </ng-template>
+      </nz-form-control> -->
+      <!-- <div class="flex justify-end">
+        <button
+          type="submit"
+          class="text-white w-40 flex items-center justify-center h-10 rounded-xl font-bold"
+          [disabled]="emailForm.invalid"
+          [ngClass]="{
+            'shine-button bg-[--main-theme]': !emailForm.invalid,
+            'bg-gray-400 text-gray-200 cursor-not-allowed': emailForm.invalid,
+          }"
+        >
+          Update Email
+        </button>
+      </div> -->
+    </div>
+  </form>
+
+  <!-- Change Password Form -->
+  <form
+    [formGroup]="passwordForm"
+    autocomplete="off"
+    (ngSubmit)="onChangePassword()"
+  >
+    <div class="flex flex-col gap-5">
+      <div class="text-4xl font-bold">Change Password</div>
+      <nz-form-control>
+        <nz-input-group
+          [nzPrefix]="prefixPassword"
+          class="text-white text-2xl w-full h-14 p-2 border rounded-lg mb-1 focus:outline-none bg-[var(--font-color)]"
+        >
+          <input
+            nz-input
+            type="password"
+            autocomplete="off"
+            formControlName="currentPassword"
+            placeholder="Old Password"
+            class="text-white text-2xl p-2 ml-3 focus:outline-none bg-[var(--font-color)]"
+          />
+        </nz-input-group>
+        <ng-template #prefixOldPassword>
+          <span nz-icon nzType="lock"></span>
+        </ng-template>
+        <nz-input-group
+          [nzPrefix]="prefixPassword"
+          class="text-white text-2xl w-full h-14 p-2 border rounded-lg mb-1 focus:outline-none bg-[var(--font-color)]"
+        >
+          <input
+            nz-input
+            type="password"
+            autocomplete="new-password"
+            formControlName="newPassword"
+            placeholder="New Password"
+            class="text-white text-2xl p-2 ml-3 focus:outline-none bg-[var(--font-color)]"
+          />
+        </nz-input-group>
+        <div
+          *ngIf="
+            passwordForm.get('newPassword')?.hasError('weakPassword') &&
+            passwordForm.get('newPassword')?.touched
+          "
+          class="text-red-400 text-base"
+        >
+          Password must contain at least 8 characters, including uppercase,
+          lowercase, number, and special character.
+        </div>
+        <nz-input-group
+          [nzPrefix]="prefixPassword"
+          class="text-white text-2xl w-full h-14 p-2 border rounded-lg mb-1 focus:outline-none bg-[var(--font-color)]"
+        >
+          <input
+            nz-input
+            type="password"
+            autocomplete="off"
+            formControlName="confirmPassword"
+            placeholder="Confirm Password"
+            class="text-white text-2xl p-2 ml-3 focus:outline-none bg-[var(--font-color)]"
+          />
+        </nz-input-group>
+        <div
+          *ngIf="
+            passwordForm.hasError('mismatch') &&
+            passwordForm.get('confirmPassword')?.touched
+          "
+          class="text-red-400 text-base"
+        >
+          Passwords do not match.
+        </div>
+        <ng-template #prefixPassword>
+          <span nz-icon nzType="lock"></span>
+        </ng-template>
+      </nz-form-control>
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="text-white w-40 flex items-center justify-center h-10 rounded-xl font-bold"
+          [disabled]="passwordForm.invalid"
+          [ngClass]="{
+            'shine-button bg-[--main-theme]': !passwordForm.invalid,
+            'bg-gray-400 text-gray-200 cursor-not-allowed':
+              passwordForm.invalid,
+          }"
+        >
+          Update Password
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

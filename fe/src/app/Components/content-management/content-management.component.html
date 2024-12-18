@@ -1,0 +1,94 @@
+<div class="p-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold text-[var(--font-color)]">Content Management</h1>
+    <div class="flex gap-4">
+      <button
+        (click)="openCreateTag()"
+        class="shine-button bg-[--main-theme] text-white w-40 flex items-center justify-center h-10 rounded-xl font-bold"
+      >
+        Create Tag
+      </button>
+      <button
+        (click)="openCreateCategory()"
+        class="shine-button bg-[--main-theme] text-white w-40 flex items-center justify-center h-10 rounded-xl font-bold"
+      >
+        Create Category
+      </button>
+    </div>
+  </div>
+
+  <!-- Lists container -->
+  <div class="grid grid-cols-2 gap-8">
+    <!-- Tags List -->
+    <div class="bg-white border-black border rounded-xl p-6 shadow-lg">
+      <h2 class="text-2xl font-bold mb-4 text-[var(--font-color)] flex justify-center items-center uppercase">Tags</h2>
+      <div class="space-y-4">
+        <div *ngFor="let tag of tagList" class="bg-[var(--main-theme)]   p-4 rounded-lg">
+          <div class="flex justify-center items-center">
+            <div>
+              <h3 class="font-semibold text-lg text-white">{{tag.name}}</h3>
+            </div>
+            
+          </div>
+        </div>
+        <div *ngIf="tagList.length === 0" class="text-white  text-center py-4">
+          No tags available
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories List -->
+    <div class="bg-white border-black border rounded-xl p-6 shadow-lg">
+      <h2 class="text-2xl font-bold mb-4 text-[var(--font-color)] flex justify-center items-center uppercase">Categories</h2>
+      <div class="space-y-4">
+        <div *ngFor="let category of categoryList" class="bg-[var(--main-theme)]   p-4 rounded-lg">
+          <div class="flex justify-center items-center">
+            <div>
+              <h3 class="font-semibold text-lg text-white">{{category.title}}</h3>
+            </div>
+            
+          </div>
+        </div>
+        <div *ngIf="categoryList.length === 0" class="text-white  text-center py-4">
+          No categories available
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tag Modal -->
+  <nz-modal
+    [(nzVisible)]="isTagModalVisible"
+    [nzTitle]="tagTitleTpl"
+    nzClosable="true"
+    nzOkText="Create"
+    (nzOnOk)="handleTagCreation(tagForm.value)"
+    (nzOnCancel)="handleTagCancel()"
+  >
+    <ng-container *nzModalContent>
+      <app-create-tag [form]="tagForm"></app-create-tag>
+    </ng-container>
+  </nz-modal>
+
+  <!-- Category Modal -->
+  <nz-modal
+    [(nzVisible)]="isCategoryModalVisible"
+    [nzTitle]="categoryTitleTpl"
+    nzClosable="true"
+    nzOkText="Create"
+    (nzOnOk)="handleCategoryCreation(categoryForm.value)"
+    (nzOnCancel)="handleCategoryCancel()"
+  >
+    <ng-container *nzModalContent>
+      <app-create-category [form]="categoryForm"></app-create-category>
+    </ng-container>
+  </nz-modal>
+</div>
+
+<ng-template #tagTitleTpl>
+  <div class="text-3xl font-bold text-[var(--font-color)]">Create tag</div>
+</ng-template>
+
+<ng-template #categoryTitleTpl>
+  <div class="text-3xl font-bold text-[var(--font-color)]">Create category</div>
+</ng-template>

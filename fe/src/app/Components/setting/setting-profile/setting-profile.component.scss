@@ -1,0 +1,17 @@
+.custom-file-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    cursor: pointer;
+    background-color: var(--main-theme); /* Change to your desired color */
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    height: 50px;
+    
+}
+
+input[type="text"] {
+    background: #000;
+}

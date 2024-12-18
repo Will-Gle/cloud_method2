@@ -1,0 +1,122 @@
+<div class="min-h-screen">
+  <!-- Header section with user greeting -->
+  <div
+    [style.background-image]="headerImage"
+    class="h-[250px] bg-gradient-to-r from-[var(--main-theme)] to-[var(--secondary-theme)] bg-cover bg-center bg-no-repeat"
+  ></div>
+
+  <div class="container mx-auto pl-10 py-8">
+    <!-- Featured/Latest section -->
+    <section class="mb-12">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-[var(--font-color)]">
+          FEATURED/ LATEST
+        </h2>
+        <a
+          href="#"
+          class="underline text-xl text-[var(--font-color)]"
+          routerLink="/blog"
+          >See more</a
+        >
+      </div>
+      <div
+        *ngIf="!loading"
+        class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-items-center"
+      >
+        <!-- Use the BlogCardComponent -->
+        <app-blog-card
+          *ngFor="
+            let article of (blog$ | async)?.slice()?.reverse() | slice: 0 : 4
+          "
+          [article]="article"
+        ></app-blog-card>
+      </div>
+    </section>
+
+    <div class="mx-10 mt-8">
+      <!-- Title -->
+      <h1 class="text-3xl font-bold text-center mb-10">WEEKLY LEADERBOARD</h1>
+
+      <!-- Podium for top 3 users -->
+      <div
+        class="flex justify-center items-end space-x-20 bg-[var(--main-theme)] rounded-t-xl border border-gray-500"
+      >
+        <!-- Second place -->
+        <div class="w-48" *ngIf="podium[1]">
+          <p class="text-center text-lg font-semibold mb-16">{{ podium[1].username }}</p>
+          <div
+            class="bg-[var(--secondary-theme)] rounded-t-lg h-40 flex items-center justify-center relative"
+          >
+            <img
+              [src]="podium[1].avatar"
+              alt="{{ podium[1].username }}"
+              class="absolute -top-14 rounded-full border-4 border-white w-32 h-32 object-cover cursor-pointer"
+              (click)="navigateUser(podium[1].nameTag)"
+            />
+          </div>
+        </div>
+        <!-- First place -->
+        <div class="w-48" *ngIf="podium[0]">
+          <p class="text-center text-lg font-semibold mb-16 mt-4">{{ podium[0].username }}</p>
+          <div
+            class="bg-[var(--side-color)] rounded-t-lg h-56 flex items-center justify-center relative"
+          >
+            <img
+              [src]="podium[0].avatar"
+              alt="{{ podium[0].username }}"
+              class="absolute -top-14 rounded-full border-4 border-white w-32 h-32 object-cover cursor-pointer"
+              (click)="navigateUser(podium[0].nameTag)"
+            />
+          </div>
+        </div>
+        <!-- Third place -->
+        <div class="w-48" *ngIf="podium[2]">
+          <p class="text-center text-lg font-semibold mb-16">{{ podium[2].username }}</p>
+          <div
+            class="bg-[var(--font-color)] rounded-t-lg h-32 flex items-center justify-center relative"
+          >
+            <img
+              [src]="podium[2].avatar"
+              alt="{{ podium[2].username }}"
+              class="absolute -top-14 rounded-full border-4 border-white w-32 h-32 object-cover cursor-pointer"
+              (click)="navigateUser(podium[2].nameTag)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Leaderboard for the rest of the users -->
+      <div class="bg-gray-200 p-4 rounded-b-lg border-2 border-gray px-36">
+        <div
+        class="flex items-center p-2 bg-[var(--main-theme)] text-white rounded-lg mb-2"
+      >
+      <div class="w-10"></div>
+      <div class="ml-4 flex justify-between w-full">
+        <div class="font-bold">Username</div>
+        <!-- <div class="font-bold">Score</div> -->
+      </div>
+        
+    </div>
+        <div *ngFor="let user of (insight$ | async | slice: 3:8)">
+            <div
+            class="flex items-center p-2 bg-[var(--font-color)] text-white rounded-lg mb-2 cursor-pointer"
+            (click)="navigateUser(user.userResponse.nameTag)"
+          >
+            <img
+              [src]="user.userResponse.avatar"
+              alt="Username"
+              class="rounded-full w-10 h-10 border-2 border-cyan-300"
+            />
+            <div class="ml-4 flex justify-between w-full">
+              <div class="font-bold">{{user.userResponse.username}}</div>
+              <!-- <div class="font-bold">{{ user.score | number: '1.1-1' }}</div> -->
+            </div>
+          </div>
+        </div>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+</div>

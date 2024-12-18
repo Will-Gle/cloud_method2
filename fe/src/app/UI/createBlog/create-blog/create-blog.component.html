@@ -1,0 +1,152 @@
+<div
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto"
+>
+  <div
+    class="bg-[var(--side-color)] rounded-[10px] shadow-lg w-[50vw] max-w-6xl mx-4 my-8 h-[90%] flex flex-col"
+  >
+    <div class="flex justify-between items-center p-4 pr-7">
+      <h1 class="text-5xl font-bold text-[var(--font-color)]">
+        {{ existingBlog ? 'Edit Post' : 'Create Post' }}
+      </h1>
+      <button
+        class="text-gray-600 hover:text-gray-800 text-5xl"
+        (click)="onClose()"
+      >
+        ×
+      </button>
+    </div>
+    <div class="overflow-y-auto flex-grow p-4">
+      <form [formGroup]="form">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-textarea-count [nzMaxCharacterCount]="100">
+              <textarea
+                rows="1"
+                formControlName="title"
+                nz-input
+                class="text-white text-2xl w-full h-40 p-2 border rounded-xl mb-1 focus:outline-none bg-[var(--font-color)]"
+                placeholder="Title"
+                [ngClass]="{ 'invalid-background': form.get('title')?.invalid }"
+              ></textarea>
+            </nz-textarea-count>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <input
+              type="file"
+              id="file-upload"
+              name="uploadfile"
+              class="hidden"
+              (change)="onFileChange($event)"
+              accept="image/*"
+            />
+            <label for="file-upload" class="custom-file-upload mb-4">
+              Upload blog thumbnail
+            </label>
+            <div *ngIf="imagePreview">
+              <img
+                [src]="imagePreview"
+                alt="Image Preview"
+                class="w-full h-72 rounded-lg shadow-md"
+              />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <div class="flex gap-5 OptionSelect Single">
+              <nz-select
+                nzPlaceHolder="Select Category"
+                [nzAllowClear]="true"
+                formControlName="category"
+                [ngClass]="{ 'selected-category': categories, 'default-category': !categories }"
+                >
+                <nz-option
+                  *ngFor="let cate of categories$ | async"
+                  [nzLabel]="cate.title"
+                  [nzValue]="cate.title"
+                ></nz-option>
+              </nz-select>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <div class="flex gap-5 OptionSelect">
+              <nz-select
+                nzMode="multiple"
+                nzPlaceHolder="Select Tags"
+                
+                formControlName="tags"
+                [nzAllowClear]="true"
+              >
+                <nz-option
+                  *ngFor="let tag of tags$ | async"
+                  [nzLabel]="tag.name"
+                  [nzValue]="tag.name"
+                ></nz-option>
+              </nz-select>
+              <button
+                (click)="openCreateTag()"
+                class="shine-button bg-[--main-theme] text-white w-40 flex items-center justify-center h-10 rounded-xl font-bold"
+              >
+                Create Tag
+              </button>
+            </div>
+            <nz-modal
+              [(nzVisible)]="isModalVisible"
+              [nzTitle]="TitleModal"
+              nzClosable="true"
+              nzOkText="Create"
+              (nzOnOk)="handleTagCreation(tagForm.value)"
+              (nzOnCancel)="handleCancel()"
+            >
+              <ng-container *nzModalContent>
+                <app-create-tag [form]="tagForm"></app-create-tag>
+              </ng-container>
+            </nz-modal>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="bg-[var(--font-color)]">
+          <div class="text-white rounded-xl">
+            <ckeditor
+              [editor]="editor"
+              [config]="editorConfig"
+              formControlName="content"
+            ></ckeditor>
+          </div>
+          <div class="flex justify-end p-4">
+            <button
+              *ngIf="form.invalid"
+              [disabled]="form.invalid"
+              class="bg-gray-500 cursor-not-allowed text-white w-32 flex items-center justify-center h-10 rounded-xl font-bold"
+            >
+            {{ existingBlog ? 'EDIT' : 'CREATE' }}
+            </button>
+            <div class="flex items-center justify-center">
+              
+              <button
+              (click)="onSubmit()"
+              *ngIf="!form.invalid"
+              [disabled]="form.invalid"
+              class="shine-button bg-[--main-theme] text-white w-32 flex items-center justify-center h-10 rounded-xl font-bold"
+              [ngStyle]="{'background-color': isLoading ? 'darkgray' : 'var(--main-theme)','cursor': isLoading ? 'not-allowed' : 'pointer'}"
+            >
+            <span nz-icon nzType="loading" *ngIf="isLoading" nzTheme="outline" class="pr-3 text-xl"></span>
+            {{ existingBlog ? 'EDIT' : 'CREATE' }}
+            </button>
+            </div>
+            
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #TitleModal>
+  <div class="text-3xl font-bold text-[var(--font-color)]">Create tag</div>
+</ng-template>

@@ -1,0 +1,105 @@
+<div
+  class="card rounded-3xl border border-gray-300 shadow-md overflow-hidden cursor-pointer w-60 h-auto"
+    (click)="openPopup()"
+>
+  <div
+    class="flex flex-col justify-around h-[180px] px-2 rounded-t-3xl z-10 bg-white relative"
+  >
+    <div class="flex justify-between">
+      <div class="flex flex-wrap gap-2 mb-2">
+          <div
+            class="text-xl font-bold py-1 px-2 rounded-lg text-white bg-[var(--main-theme)]"
+          >
+            {{ report.reportResponse.reportReason.toUpperCase() }}
+          </div>
+      </div>
+    </div>
+
+    <h3
+      class="font-bold mb-1 text-2xl truncate-title"
+      *ngIf="!report.user"
+    >
+      {{ report.blogTitle }}
+    </h3>
+    <h3
+      class="font-bold mb-1 text-2xl truncate-title"
+      *ngIf="report.user"
+    >
+      {{ report.user.username }}
+    </h3>
+  </div>
+</div>
+
+<ng-container *ngIf="isPopupVisible">
+    <div
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto"
+>
+  <div
+    class="bg-[var(--side-color)] rounded-[10px] shadow-lg w-[50vw] max-w-6xl mx-4 my-8 max-h-[90vh] flex flex-col overflow-y-auto"
+  >
+    <div
+      class="flex justify-end items-center p-4 pl-14 pr-7 border-b-[1px] border-[var(--font-color)]"
+    >
+      <div class="flex gap-x-5 items-center content-center relative">
+        <button
+          (click)="closePopup()"
+          class="text-gray-600 hover:text-gray-800 text-5xl"
+        >
+          X
+        </button>
+      </div>
+    </div>
+
+    <div class="flex flex-col p-10 gap-y-5">
+        <div class="flex gap-5 item-center content-center text-2xl" *ngIf="!report.user">
+            <div class="font-bold mb-1 ">Blog title:</div> 
+            <h3>{{ report.blogTitle }}</h3>
+        </div>
+        <div class="flex gap-5 item-center content-center text-2xl" *ngIf="report.user">
+          <div class="font-bold mb-1 ">User's name:</div> 
+          <h3>{{ report.user.username }}</h3>
+      </div>
+        
+      <div class="flex justify-between">
+        <div class="flex flex-wrap gap-2 mb-2">
+            <div class="text-2xl font-bold rounded-lg">
+                Type: 
+            </div>
+          <div
+            class="text-xl font-bold py-1 px-2 rounded-lg text-white bg-[var(--main-theme)]"
+          >
+            {{ report.reportResponse.reportReason.toUpperCase() }}
+          </div>
+        </div>
+      </div>
+      <div class=" text-2xl  ">
+        <p class="font-bold">Reason: </p>
+        <div class="whitespace-normal break-words w-full" >{{ report.reportResponse.description }}</div>
+      </div>
+      <div class="flex gap-5 text-2xl">
+        <div class="font-bold">Details: </div>
+        <div class="underline cursor-pointer text-[var(--main-theme)]" *ngIf="!report.user" [routerLink]="['/blog',report.reportResponse.blogId]">{{report.blogTitle}}</div>
+        <div class="underline cursor-pointer text-[var(--main-theme)]" *ngIf="report.user" [routerLink]="['/user',report.user.nameTag]">{{report.user.username}}</div>
+      </div>
+      <div class="flex gap-5 text-2xl" *ngIf="reportAction">
+        <div class="font-bold">Action: </div>
+        <div class="flex gap-5">
+            <div
+            class="text-xl font-bold py-1 px-2 rounded-lg text-white bg-gray-600 cursor-pointer"
+            (click)="handleReportAction(report.reportResponse.id,'CANCEL',report.reportResponse.reportStatus)"
+          >DISMISS</div>
+
+          <div
+            *ngIf="reportStatus !== 'DELETE'"
+            class="text-xl font-bold py-1 px-2 rounded-lg text-white bg-red-500 cursor-pointer"
+            (click)="handleReportAction(report.reportResponse.id,'DELETE',report.reportResponse.reportStatus)"
+          >APPROVE</div>
+        </div>
+      </div>
+
+  </div>
+</div>
+</div>
+</ng-container>
+
+

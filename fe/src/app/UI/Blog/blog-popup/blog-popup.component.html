@@ -1,0 +1,65 @@
+<div
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto"
+>
+  <div
+    class="bg-[var(--side-color)] rounded-[10px] shadow-lg w-[70vw] max-w-6xl mx-4 my-8 max-h-[90vh] flex flex-col overflow-y-auto"
+  >
+    <div
+      class="sticky top-0 flex justify-between items-center p-4 pl-14 pr-7 border-b-[1px] border-[var(--font-color)] bg-[var(--side-color)]"
+    >
+      <div class="flex items-center space-x-10">
+        <button class="text-gray-600 hover:text-gray-800 text-5xl">&lt;</button>
+        <button class="text-gray-600 hover:text-gray-800 text-5xl">&gt;</button>
+      </div>
+      <div class="flex gap-x-5 items-center content-center relative">
+        <button nz-button nz-dropdown [nzDropdownMenu]="menu" *ngIf="isProfile">
+          <span
+            nz-icon
+            nzType="more"
+            nzTheme="outline"
+            class="text-4xl text-gray-600 hover:text-gray-800"
+          ></span>
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu class="bg-[var(--font-color)]">
+            <li
+              nz-menu-item
+              class="text-white text-xl hover:bg-[var(--main-theme)]"
+              (click)="onEdit()"
+            >
+              <span nz-icon nzType="edit" nzTheme="outline" class="mr-3"></span>
+              <span>Edit post</span>
+            </li>
+            <li
+              nz-menu-item
+              class="text-white text-xl hover:bg-[var(--main-theme)]"
+              (click)="onDelete()"
+            >
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                class="mr-3"
+              ></span>
+              <span>Delete post</span>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+        <button
+          (click)="onClose()"
+          class="text-gray-600 hover:text-gray-800 text-5xl"
+        >
+          X
+        </button>
+      </div>
+    </div>
+
+    <app-blog-detail [blogId]="article.id" [isPopup]="true"></app-blog-detail>
+  </div>
+</div>
+<app-create-blog
+  *ngIf="isVisible"
+  (close)="closePopup()"
+  [existingBlog]="article"
+>
+</app-create-blog>

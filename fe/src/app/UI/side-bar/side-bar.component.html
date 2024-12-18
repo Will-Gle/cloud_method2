@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-y-5">
+<div class="flex flex-col gap-y-5">
+  <div class="text-xl font-bold text-[var(--font-color)]">Discover</div>
+  <div class="flex flex-col gap-y-2">
+    <ng-container *ngFor="let cate of categories$ |async">
+      <div class="text-md  text-[var(--font-color)] cursor-pointer hover:underline" (click)="selectCategory(cate)">{{ cate.title }}</div>
+    </ng-container>
+  </div>
+</div>
+<div class="flex flex-col gap-y-5">
+  <div class="text-xl font-bold text-[var(--font-color)]">Personal</div>
+  <div class="flex flex-col gap-y-2">
+      <div class="text-md  text-[var(--font-color)] cursor-pointer hover:underline" [routerLink]="['/blog/bookmark']"  >Bookmark</div>
+      <!-- <div class="text-md  text-[var(--font-color)] cursor-pointer hover:underline">Liked</div> -->
+  </div>
+</div>
+<!-- <div class="flex flex-col gap-y-5">
+  <div class="text-xl font-bold text-[var(--font-color)]">Groups</div>
+    <ng-container *ngFor="let group of groups">
+      <div class="text-md  text-[var(--font-color)] cursor-pointer hover:underline">{{ group.name }}</div>
+    </ng-container>
+</div> -->
+</div>

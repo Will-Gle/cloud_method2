@@ -1,0 +1,216 @@
+<div class="sticky top-0 z-50 bg-white">
+  <div class="flex p-5 items-center">
+    <span class="text-[--font-color] font-bold text-3xl pl-5">MEB</span>
+    <div class="flex items-center justify-between w-full pr-5">
+      <div class="flex justify-between 3xl:w-[40%] 4xl:w-[30%] lg:w-[50%] pl-20">
+        <span
+          class="text-[--font-color] text-xl font-bold cursor-pointer hover:text-[--main-theme]"
+          routerLink="/home"
+          >Home</span
+        >
+        <span
+          class="text-[--font-color] text-xl font-bold cursor-pointer hover:text-[--main-theme]"
+          routerLink="/blog"
+          >Blog</span
+        >
+        <span
+          class="text-[--font-color] text-xl font-bold cursor-pointer hover:text-[--main-theme]"
+          routerLink="/about"
+          >About</span
+        >
+      </div>
+      <div *ngIf="isLogin">
+        <div class="gap-x-10 flex items-center justify-between">
+          <div
+            class="shine-button bg-[--main-theme] text-white w-48 flex items-center justify-center h-10 px-5 py-2 rounded-xl font-bold"
+            (click)="openCreatePopup()"
+          >
+            SHARE SOMETHING
+          </div>
+          <ng-container *ngFor="let item of navbarItems">
+            @if (item.icon === "user") {
+              <div
+                nz-dropdown
+                nzTrigger="hover"
+                [nzDropdownMenu]="menu"
+                nzPlacement="bottomCenter"
+              >
+                <span
+                  nz-icon
+                  [nzType]="item.icon"
+                  nzTheme="outline"
+                  class="text-3xl text-[--main-theme] cursor-pointer"
+                ></span>
+              </div>
+              <nz-dropdown-menu #menu>
+  
+              <ul
+                  class="text-[--font-color] text-xl bg-[--side-color] p-4 rounded-xl shadow-lg w-52"
+                >
+                  <li class="mb-4">
+                    <div
+                      class="flex items-center bg-white rounded-lg p-2"
+                      style="box-shadow: 0 5px 5px 0 black"
+                    >
+                      <div class="w-12 h-12 rounded-full overflow-hidden mr-3">
+                        <img
+                          [src]="userAvt"
+                          alt="User"
+                          class="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <div class="font-bold">{{ userName }}</div>
+                        <div class="text-sm text-gray-500">
+                          <code>&#64;</code>{{ userNameTag }}
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- <ng-container *ngIf="currentRole">
+                
+                </ng-container> -->
+                <li
+                    nz-menu-item
+                    class="flex text-lg items-center py-2 hover:text-white hover:bg-[var(--main-theme)] rounded-lg font-bold"
+                    routerLink="/profile"
+                    *ngIf="currentRole ==='user'"
+                >
+                    <span
+                      nz-icon
+                      nzType="user"
+                      nzTheme="outline"
+                      class="mr-3"
+                    ></span>
+                    Profile
+                  </li>
+                  <ng-container *ngIf="currentRole ==='admin'">
+                  <li
+                  nz-menu-item
+                  class="flex text-lg items-center py-2 hover:text-white hover:bg-[var(--main-theme)] rounded-lg font-bold"
+                  routerLink="/admin-management"
+                >
+                <span nz-icon nzType="security-scan" nzTheme="outline" class="mr-3"></span>
+                  Admin
+                </li>
+                </ng-container>
+                <ng-container *ngIf="currentRole ==='user'">
+                  <li
+                    nz-menu-item
+                    class="flex text-lg items-center py-2 hover:text-white hover:bg-[var(--main-theme)] rounded-lg font-bold"
+                    routerLink="/blog/bookmark"
+                  >
+                    <span
+                      nz-icon
+                      nzType="book"
+                      nzTheme="outline"
+                      class="mr-3"
+                    ></span>
+                    Bookmark
+                  </li>
+                </ng-container>
+                <!-- <li
+                    nz-menu-item
+                    class="flex text-lg items-center py-2 hover:text-white hover:bg-[var(--main-theme)] rounded-lg font-bold"
+                    routerLink="/codespace"
+                  >
+                    <span
+                      nz-icon
+                      nzType="code"
+                      nzTheme="outline"
+                      class="mr-3"
+                    ></span>
+                    Codespace
+                  </li> -->
+                  <li
+                    nz-menu-item
+                    class="flex text-lg items-center py-2 hover:text-white hover:bg-[var(--main-theme)] rounded-lg font-bold"
+                    routerLink="/setting"
+                    *ngIf="currentRole ==='user'"
+                >
+                    <span
+                      nz-icon
+                      nzType="setting"
+                      nzTheme="outline"
+                      class="mr-3"
+                    ></span>
+                    Setting
+                  </li>
+                  <li class="mt-4">
+                    <button
+                      (click)="onLogout()"
+                      class="w-full text-lg bg-[var(--main-theme)] text-white py-2 rounded-lg font-bold"
+                    >
+                      LOGOUT
+                    </button>
+                  </li>
+                </ul>
+              </nz-dropdown-menu>
+            } @else {
+              <div [routerLink]="item.path">
+                <span
+                  nz-icon
+                  [nzType]="item.icon"
+                  nzTheme="outline"
+                  class="text-3xl text-[--main-theme] cursor-pointer"
+                ></span>
+              </div>
+            }
+          </ng-container>
+        </div>
+      </div>
+      <div *ngIf="!isLogin">
+        <div class="gap-x-4 flex items-center justify-between">
+          <div
+            class="bg-white text-[--main-theme] w-32 flex items-center justify-center h-10 px-5 py-2 rounded-xl font-bold border-[--main-theme] border-2 cursor-pointer"
+            routerLink="/auth/register"
+          >
+            REGISTER
+          </div>
+          <div
+            class="shine-button bg-[--main-theme] text-white w-32 flex items-center justify-center h-10 px-5 py-2 rounded-xl font-bold"
+            routerLink="/auth/login"
+          >
+            LOGIN
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-full bg-black h-[75px] flex items-center justify-center">
+    <div class="relative">
+      <span
+        nz-icon
+        nzType="search"
+        nzTheme="outline"
+        class="text-[--font-color] absolute left-3 top-1/2 transform -translate-y-1/2"
+      ></span>
+      <input
+        type="text"
+        placeholder="Search"
+        class="w-[600px] h-10 rounded-full px-5 py-2 bg-[--side-color] pl-10 focus:outline-none placeholder:text-[--font-color]"
+        (input)="onSearch($event)"
+      />
+      <div
+        *ngIf="filteredBlogs.length > 0 && searchTerm"
+        class="absolute z-10 w-full bg-[--font-color] shadow-lg rounded-lg mt-2"
+      >
+        <ng-container *ngFor="let blog of filteredBlogs">
+          <div
+            class="p-3 hover:bg-[--main-theme] hover:text-white hover:rounded-lg cursor-pointer"
+            (click)="selectBlog(blog)"
+          >
+            <h3 class="text-base font-semibold text-white hover:text-white">
+              {{ blog.title }}
+            </h3>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+
+<app-create-blog *ngIf="isCreatePopupVisible" (close)="closeCreatePopup()">
+</app-create-blog>

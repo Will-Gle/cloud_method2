@@ -1,0 +1,47 @@
+<div class="flex flex-row pl-5 py-8 gap-x-40 BlogList">
+  <app-side-bar></app-side-bar>
+
+  <div class="flex flex-col gap-y-5">
+    <div class="text-5xl font-bold text-[var(--font-color)]">Blogs</div>
+    <div class="flex flex-wrap gap-2">
+      <nz-select
+        (ngModelChange)="filterByTag($event)"
+        nzMode="multiple"
+        [(ngModel)]="selectedTag"
+        nzAllowClear
+        [nzPlaceHolder]="placeholder"
+        class="min-w-40"
+        nzShowArrow="false"
+        [nzMaxTagCount]="3"
+        [nzMaxTagPlaceholder]="tagPlaceHolder"
+      >
+        <nz-option
+          *ngFor="let tag of tags$ | async"
+          [nzValue]="tag"
+          [nzLabel]="tag.name"
+          class="font-bold"
+        ></nz-option>
+      </nz-select>
+    </div>
+    <div
+      class="grid grid-cols-1 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-6 gap-x-[3vw] gap-y-10"
+    >
+      <ng-container *ngFor="let article of displayedBlog">
+        <app-blog-card [article]="article"></app-blog-card>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #placeholder>
+  <div class="flex gap-x-4">
+    <span
+      nz-icon
+      nzType="menu"
+      nzTheme="outline"
+      class="text-white font-bold"
+    ></span>
+    <span class="text-white font-bold">FILTER</span>
+  </div>
+</ng-template>
+<ng-template #tagPlaceHolder> ... </ng-template>

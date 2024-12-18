@@ -1,0 +1,113 @@
+<div class="flex flex-row pl-5 py-8 gap-x-40">
+  <app-side-bar></app-side-bar>
+
+  <div class="flex flex-col gap-y-5 w-full text-xl">
+    <!-- User profile header -->
+    <div class="flex items-center gap-x-4 w-full">
+      <img [src]="userAvt" alt="User profile" class="w-24 h-24 rounded-full" />
+      <div>
+        <h1 class="text-3xl font-bold text-[var(--font-color)]">
+          {{ userName }}
+        </h1>
+        <p class="text-gray-600"><code>&#64;</code>{{ userNameTag }}</p>
+        <p class="text-gray-600">{{ userBio }}</p>
+      </div>
+      <div *ngIf="!isProfile" class="ml-[20%] gap-x-4 flex font-bold">
+        <!-- <button
+          class="px-4 py-2 bg-gray-200 text-[var(--font-color)] mr-2 rounded-xl"
+        >
+          FOLLOWED
+        </button> -->
+        <button
+          class="shine-button bg-white text-[var(--main-theme)] px-4 py-1 rounded-xl font-bold border border-[var(--font-color)]"
+          *ngIf="!isFollowing"
+          (click)="onFollow()"
+        >
+          FOLLOW
+        </button>
+        <button
+          class="shine-button bg-[var(--main-theme)] text-white px-4 py-1 rounded-xl font-bold"
+          *ngIf="isFollowing"
+          (click)="onFollow()"
+        >
+          FOLLOWED
+        </button>
+        <button
+          class="bg-white text-red-400 px-4 py-1 rounded-xl font-bold border border-red-400 hover:bg-red-400 hover:text-white"
+        >
+          <span
+            nz-icon
+            nzType="flag"
+            nzTheme="outline"
+            class="text-3xl cursor-pointer"
+            (click)="openReport()"
+          ></span>
+        </button>
+      </div>
+      <div *ngIf="isProfile" class="ml-[20%] gap-x-4 flex font-bold">
+        <button
+          class="shine-button px-4 py-2 bg-[var(--main-theme)] text-white rounded-xl"
+          [routerLink]="['/setting']"
+        >
+          EDIT PROFILE
+        </button>
+        <!-- <button
+          class="shine-button px-4 py-2 bg-[var(--main-theme)] text-white rounded-xl"
+        >
+          INSIGHT
+        </button> -->
+      </div>
+    </div>
+
+    <!-- User stats -->
+    <div class="flex gap-x-8 text-xl text-[var(--font-color)]">
+      <div>
+        <span class="font-bold">{{ posts }}</span> Posts
+      </div>
+      <div>
+        <span class="font-bold">{{ following }}</span> Following
+      </div>
+      <div>
+        <span class="font-bold">{{ followers }}</span> Followers
+      </div>
+      <div>
+        <span class="font-bold">{{ totalUpvote }}</span> Upvotes
+      </div>
+    </div>
+    <div></div>
+    <!-- User's blogs -->
+    <div class="text-3xl font-bold text-[var(--font-color)]">Your Blogs</div>
+    <div
+      class="grid grid-cols-1 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-6 gap-x-[5vw] gap-y-10"
+    >
+      <ng-container *ngFor="let blog of userBlog$ | async">
+        <app-blog-card
+          [article]="blog"
+          [userId]="userId"
+          [userName]="userName"
+          [isProfile]="true"
+        ></app-blog-card>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<nz-modal
+        [(nzVisible)]="isModalVisible"
+        [nzTitle]="TitleModal"
+        nzClosable="true"
+        nzOkText="Create"
+        (nzOnOk)="onReport()"
+        (nzOnCancel)="handleCancel()"
+        [nzFooter]="footerTemplate"
+      >
+        <ng-container *nzModalContent>
+          <app-report-blog [form]="reportForm" ></app-report-blog>
+        </ng-container>
+      </nz-modal>
+<ng-template #TitleModal>
+  <div class="text-3xl font-bold text-[var(--font-color)]">Report User</div>
+</ng-template>
+<ng-template #footerTemplate>
+  <!-- <button nz-button nzType="default" (click)="handleCancel()">Cancel</button> -->
+  <button class="border border-black p-2 rounded" nz-button nzType="primary" (click)="onReport()">Report</button>
+</ng-template>
